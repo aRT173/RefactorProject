@@ -1,72 +1,38 @@
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
-import {
-  CardTitle,
-  Container,
-  Description,
-  Input,
-  InputContainer,
-} from "./styles";
-
-import { Card } from "antd";
-
-import cityView from "./assets/city1.jpg";
-
-type CityItem = {
-  id: number;
-  description: string;
-  name: string;
-};
+import React, {ReactElement, useEffect, useState} from "react";
+import {CityItem, List} from "./List";
+import {Loader} from "./Loader";
+import {Search} from "./Search";
 
 export function Marketplace(): ReactElement {
   const [items, setItems] = useState<CityItem[]>([]);
-  const [inputValue, setInputValue] = useState("");
+  const [filteredItems, setFilteredItems] = useState<CityItem[]>([]);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const getFilms = async () => {
-      await fetch("http://localhost:4000/city-items", {
+      setLoading(true)
+
+      const data = await (await fetch(`${process.env.REACT_APP_API_URL}/city-items`, {
         method: "GET",
-      })
-        .then((res) => res.json())
-        .then((data) => setItems(data.items));
+      })).json()
+
+      setItems(data.items)
+      setFilteredItems(data.items)
+
+      setLoading(false)
     };
 
     getFilms();
   }, []);
 
-  const onInputChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-      const value = event.target.value;
-      setInputValue(value);
-
-      const filtered = items.filter((item) =>
-        item.name.toLowerCase().includes(value.toLowerCase()),
-      );
-      setItems(filtered);
-    },
-    [items],
-  );
-
   return (
     <>
-      <InputContainer>
-        <Input
-          id="cityName"
-          value={inputValue}
-          placeholder="Type city name"
-          onChange={onInputChange}
-        />
-      </InputContainer>
-      <Container>
-        {items.map((value, index) => (
-          <Card
-            key={`${value.name}_${index}`}
-            cover={<img draggable={false} alt="example" src={cityView} />}
-          >
-            <CardTitle>{value.name}</CardTitle>
-            <Description>{value.description}</Description>
-          </Card>
-        ))}
-      </Container>
+      <Search
+        items={items}
+        setLoading={setLoading}
+        setFilteredItems={setFilteredItems}
+      />
+      {loading ? <Loader /> : <List items={filteredItems}/>}
     </>
   );
 }
