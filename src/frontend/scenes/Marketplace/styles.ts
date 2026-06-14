@@ -3,10 +3,9 @@ import { Input as BaseInput } from "antd";
 import InfiniteScrollBase from "react-infinite-scroll-component";
 
 export const InfiniteScroll = styled(InfiniteScrollBase)`
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 `;
 
 export const InputContainer = styled.div`
@@ -26,5 +25,6 @@ export const CardTitle = styled.p`
 `;
 
 export const Description = styled.p`
-  margin: 30px 0 0;
+  margin: 0;
+  flex: 3;
 `;

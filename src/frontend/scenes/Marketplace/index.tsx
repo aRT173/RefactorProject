@@ -1,25 +1,28 @@
-import React, {ReactElement, useEffect, useState} from "react";
-import {CityItem, List} from "./List";
-import {Loader} from "./Loader";
-import {Search} from "./Search";
+import React, { ReactElement, useEffect, useState } from "react";
+import { CityItem, List } from "./List";
+import { Loader } from "./Loader";
+import { Search } from "./Search";
+import { Filters } from "./Filters";
 
 export function Marketplace(): ReactElement {
   const [items, setItems] = useState<CityItem[]>([]);
   const [filteredItems, setFilteredItems] = useState<CityItem[]>([]);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getFilms = async () => {
-      setLoading(true)
+      setLoading(true);
 
-      const data = await (await fetch(`${process.env.REACT_APP_API_URL}/city-items`, {
-        method: "GET",
-      })).json()
+      const data = await (
+        await fetch(`${process.env.REACT_APP_API_URL}/city-items`, {
+          method: "GET",
+        })
+      ).json();
 
-      setItems(data.items)
-      setFilteredItems(data.items)
+      setItems(data.items);
+      setFilteredItems(data.items);
 
-      setLoading(false)
+      setLoading(false);
     };
 
     getFilms();
@@ -32,7 +35,12 @@ export function Marketplace(): ReactElement {
         setLoading={setLoading}
         setFilteredItems={setFilteredItems}
       />
-      {loading ? <Loader /> : <List items={filteredItems}/>}
+      <Filters
+        items={items}
+        setLoading={setLoading}
+        setFilteredItems={setFilteredItems}
+      />
+      {loading ? <Loader /> : <List items={filteredItems} />}
     </>
   );
 }
