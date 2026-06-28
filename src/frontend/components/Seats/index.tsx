@@ -46,7 +46,10 @@ export function Seats({
     }).then(async (res) => {
       if (!res.ok) {
         const parsed = await res.json();
-        throw new Error(parsed.message);
+        triggerNotification({
+          notificationText: "Seat successfully booked!",
+          notificationType: "danger",
+        });
       }
 
       triggerNotification({

@@ -129,6 +129,9 @@ app.get("/city-items", (req, res) => {
     id: i,
     description: faker.lorem.paragraph(3),
     name: faker.location.city(),
+    roomsNumber: faker.number.int({ max: 5, min: 1 }),
+    rating: faker.number.int({ max: 5, min: 1 }),
+    floor: faker.number.int({ max: 20, min: 1 }),
   }));
   res.send({ items, status: 200 });
 });
