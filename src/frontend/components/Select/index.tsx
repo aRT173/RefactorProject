@@ -31,9 +31,9 @@ export const Select = (props: SelectProps) => {
 
   return (
     <SelectBase
+      {...otherProps}
       onChange={handleChange}
       options={preparedOptions}
-      {...otherProps}
     />
   );
 };

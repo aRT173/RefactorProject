@@ -7,17 +7,17 @@ import { getOptionValues } from "./utils";
 export type SelectPropsBase = Omit<
   SelectProps,
   "disabled" | "mode" | "onOpenChange" | "open" | "showSearch"
-> & {
-  label?: string;
-  allowSearch?: boolean;
-  required?: boolean;
-  woRedStar?: boolean;
-  disabled?: boolean;
-  multiple?: boolean;
-  allowEmpty?: boolean;
-  placeholder?: string;
-  description?: string;
-}
+> & Partial<{
+  label: string;
+  allowSearch: boolean;
+  required: boolean;
+  woRedStar: boolean;
+  disabled: boolean;
+  multiple: boolean;
+  allowEmpty: boolean;
+  placeholder: string;
+  description: string;
+}>
 
 export const SelectBase = (props: SelectPropsBase) => {
   const {
@@ -39,7 +39,7 @@ export const SelectBase = (props: SelectPropsBase) => {
   const [opened, setOpened] = useState<boolean>(false)
   const [value, setValue] = useState<SelectProps["value"]>(defaultValue)
 
-  const handleChange = (value: unknown, option?: DefaultOptionType) => {
+  const handleChange = (value: SelectProps["value"], option?: DefaultOptionType) => {
     setValue(value);
     onChange?.(value, option);
   };
