@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { CityItem, List } from "./List";
 import { Loader } from "./Loader";
-import { Search } from "./Search";
 import { Filters } from "./Filters";
 
 export function Marketplace(): ReactElement {
@@ -30,14 +29,8 @@ export function Marketplace(): ReactElement {
 
   return (
     <>
-      <Search
-        items={items}
-        setLoading={setLoading}
-        setFilteredItems={setFilteredItems}
-      />
       <Filters
         items={items}
-        setLoading={setLoading}
         setFilteredItems={setFilteredItems}
       />
       {loading ? <Loader /> : <List items={filteredItems} />}
