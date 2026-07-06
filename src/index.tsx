@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { FilmsList } from "./frontend/scenes/FilmsList";
 import { Film } from "./frontend/scenes/Film";
 import { Marketplace } from "./frontend/scenes/Marketplace";
+import { Bouncing } from "./frontend/scenes/Bouncing";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/marketplace",
     element: <Marketplace />,
+  },
+  {
+    path: "/bouncing",
+    element: <Bouncing />,
   },
 ]);
 
